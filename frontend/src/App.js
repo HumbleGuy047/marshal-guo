@@ -12,6 +12,7 @@ function App() {
         <div className="pages">
           <Routes>
             <Route exact path="/" element={<Home />} />
+            <Route exact path="/blogs/create" element={<Home />} />
           </Routes>
         </div>
       </Router>
