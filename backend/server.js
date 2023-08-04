@@ -26,6 +26,6 @@ mongoose.connect(process.env.MONGO_URI)
         .catch(err => console.log(err));
 
 // routes
-app.use('/blogs', blogroutes);
+app.use('/api/blogs', blogroutes);
 
 
