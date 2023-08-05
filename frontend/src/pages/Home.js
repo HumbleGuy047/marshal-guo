@@ -7,7 +7,7 @@ const Home = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             // fetch data from express app server
-            const response = await fetch('https://marshal-guo.vercel.app/api/blogs');
+            const response = await fetch('https://marshal-guo-api.vercel.app/api/blogs');
             const json = await response.json();
             if (response.ok) {
                 setBlogs(json);
