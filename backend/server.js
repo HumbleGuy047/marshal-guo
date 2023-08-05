@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const blogroutes = require('./routes/blogs');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // express app
 const app = express();
@@ -10,6 +11,16 @@ const app = express();
 // middleware
 app.use(express.json());    // attach body to req.body
 app.use(express.urlencoded({extended: true}));
+
+//============== CORS ==============
+app.use(cors(
+    {
+        origin: [""],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+));
+//============== CORS ==============
 
 app.use((req,res,next) => {
     console.log(req.path, req.method);
