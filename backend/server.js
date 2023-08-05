@@ -28,4 +28,6 @@ mongoose.connect(process.env.MONGO_URI)
 // routes
 app.use('/api/blogs', blogroutes);
 
+module.exports = app;
+
 
