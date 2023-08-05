@@ -13,13 +13,13 @@ app.use(express.json());    // attach body to req.body
 app.use(express.urlencoded({extended: true}));
 
 //============== CORS ==============
-// app.use(cors(
-//     {
-//         origin: ["https://marshal-guo.vercel.app"],
-//         methods: ["POST", "GET"],
-//         credentials: true
-//     }
-// ));
+app.use(cors(
+    {
+        origin: ["https://marshal-guo.vercel.app"],
+        methods: ["POST", "GET", "DELETE", "PATCH"],
+        credentials: true
+    }
+));
 //============== CORS ==============
 
 app.use((req,res,next) => {
