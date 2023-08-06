@@ -15,7 +15,7 @@ const ViewBlogs = () => {
             }
         }
         fetchBlogs();
-    }, []);
+    }, [dispatch]);
     
     return (
         <div className="blogs">

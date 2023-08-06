@@ -3,6 +3,18 @@ const mongoose = require('mongoose');
 
 const createBlog = async (req, res) => {
     const {title, body} = req.body;
+
+    let emptyFields = [];
+    if (!title) {
+        emptyFields.push('title');
+    }
+    if (!body) {    
+        emptyFields.push('body');
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in all fields', emptyFields});
+    }
+
     try {
         const data = await BlogModel.create({title, body});
         res.status(202).json(data);
