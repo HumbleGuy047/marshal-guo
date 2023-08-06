@@ -1,20 +1,22 @@
-import {useState, useEffect} from 'react';
+import { useEffect} from 'react';
 import BlogDetails from '../components/BlogDetails';
+import { useBlogContext } from '../hooks/useBlogContext';
 
 const ViewBlogs = () => {
-    const [blogs, setBlogs] = useState(null);   // create blogs object to contain response json
-
+    const {blogs, dispatch} = useBlogContext();
+    
     useEffect(() => {
         const fetchBlogs = async () => {
             // fetch data from express app server
             const response = await fetch('/api/blogs');
             const json = await response.json();
             if (response.ok) {
-                setBlogs(json);
+                dispatch({type: 'GET_BLOGS', payload: json})
             }
         }
         fetchBlogs();
     }, []);
+    
     return (
         <div className="blogs">
             {blogs && blogs.map(blog => (
