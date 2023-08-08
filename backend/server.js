@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const blogroutes = require('./routes/blogs');
+const userroutes = require('./routes/users');
 const mongoose = require('mongoose');
 // const cors = require('cors');
 
@@ -38,6 +39,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 // routes
 app.use('/api/blogs', blogroutes);
+app.use('/api/users', userroutes);
 
 module.exports = app;
 

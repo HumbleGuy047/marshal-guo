@@ -4,6 +4,10 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import ViewBlogs from './pages/ViewBlogs';
 import CreateBlog from './pages/CreateBlog';
 import Navbar from './components/Navbar';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+
+
 
 function App() {
   return (
@@ -14,6 +18,8 @@ function App() {
           <Routes>
             <Route exact path="/" element={<ViewBlogs />} />
             <Route exact path="/createBlog" element={<CreateBlog />} />
+            <Route exact path="/signup" element={<Signup />} />
+            <Route exact path="/login" element={<Login />} />
           </Routes>
         </div>
       </Router>

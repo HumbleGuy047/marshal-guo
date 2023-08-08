@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const {createBlog, getBlogs, getBlog, deleteBlog, updateBlog} = require('../controllers/BlogController');
 
+const requireAuth = require('../middleware/requireAuth');
+
+router.use(requireAuth);
+
 // different requests
 router.get('/', getBlogs);
 router.post('/', createBlog);
