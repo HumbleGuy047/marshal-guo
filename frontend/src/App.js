@@ -10,16 +10,18 @@ import Login from './pages/Login';
 
 
 function App() {
+  const {state:{user}} = useAuthContext();
+
   return (
     <div className="App">
       <Router>
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route exact path="/" element={<ViewBlogs />} />
-            <Route exact path="/createBlog" element={<CreateBlog />} />
-            <Route exact path="/signup" element={<Signup />} />
-            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/" element={user ? <ViewBlogs /> : <Navigate to="/login"/>} />
+            <Route exact path="/createBlog" element={user ? <CreateBlog /> : <Navigate to="/login"/>} />
+            <Route exact path="/signup" element={!user ? <Signup /> : <Navigate to="/"/>} />
+            <Route exact path="/login" element={!user ? <Login /> : <Navigate to="/"/>} />
           </Routes>
         </div>
       </Router>
