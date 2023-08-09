@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useBlogContext } from "../hooks/useBlogContext";
 import { useNavigate } from "react-router-dom";
-
+import { useAuthContext } from "../hooks/useAuthContext";
 const CreateBlog = () => {
     const {dispatch} = useBlogContext();
     
@@ -12,13 +12,21 @@ const CreateBlog = () => {
 
     const navigate = useNavigate();
 
+    const {state: {user}} = useAuthContext();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!user) {
+            setError('You must be logged in to create a blog');
+            return;
+        }
+       
         const response = await fetch('/api/blogs', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${user.token}`
             },
             body: JSON.stringify({ title, body })
         });

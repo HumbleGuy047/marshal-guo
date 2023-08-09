@@ -1,12 +1,19 @@
 import { useBlogContext } from "../hooks/useBlogContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const BlogDetails = ({blog}) => {
     const {dispatch} = useBlogContext();
-
+    const {state:{user}} = useAuthContext();
     const handleClick = async () => {
+        if (!user) {
+            return;
+        }
         const response = await fetch('/api/blogs/'+blog._id, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${user.token}`,
+            }
         });
         const json = await response.json();
         if (response.ok) {

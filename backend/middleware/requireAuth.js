@@ -10,7 +10,7 @@ const requireAuth = async  (req, res, next) => {
     }
     const token = authorization.split(' ')[1];      // get token
     try {
-        const {_id} =jwt.verify(token, process.env.SECRET); // check if token is valid for a user object
+        const {_id} =jwt.verify(token, process.env.JWT_SECRET); // check if token is valid for a user object
         req.user = await User.findOne({_id}).select('_id');
         next();
     } catch (error) {
