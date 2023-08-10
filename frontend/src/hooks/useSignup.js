@@ -1,7 +1,7 @@
 const { useState } = require('react');
 const { useAuthContext } = require('./useAuthContext');
 
-require('dotenv').config();
+// require('dotenv').config();
 
 export const useSignup = () => {
     const [error, setError] = useState(null);

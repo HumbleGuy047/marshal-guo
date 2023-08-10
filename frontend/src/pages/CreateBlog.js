@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useBlogContext } from "../hooks/useBlogContext";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
-require('dotenv').config();
+// require('dotenv').config();
 
 const CreateBlog = () => {
     const {dispatch} = useBlogContext();
