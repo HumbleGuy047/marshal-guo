@@ -11,12 +11,12 @@ export const useLogin = () => {
         setIsPending(true);
         setError(null);
 
-        const response = await fetch(`${process.env.API_URL}/api/users/login`, {
+        const response = await fetch(`https://marshal-guo-api.vercel.app/api/users/login`, {
             method: 'POST',
             mode: 'cors',
             headers: { 
                 'Content-Type': 'application/json', 
-                'Origin': `${process.env.Origin_URL}`
+                'Origin': `https://marshal-guo.vercel.app`
             },
             body: JSON.stringify({ email, password })
         });

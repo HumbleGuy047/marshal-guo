@@ -24,13 +24,13 @@ const CreateBlog = () => {
             return;
         }
        
-        const response = await fetch(`${process.env.API_URL}/api/blogs`, {
+        const response = await fetch(`https://marshal-guo-api.vercel.app/api/blogs`, {
             method: 'POST',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}`,
-                'Origin': process.env.Origin_URL
+                'Origin': 'https://marshal-guo.vercel.app'
             },
             body: JSON.stringify({ title, body })
         });

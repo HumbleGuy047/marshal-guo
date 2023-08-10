@@ -11,11 +11,11 @@ const ViewBlogs = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             // fetch data from express app server
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/blogs`, {
+            const response = await fetch(`https://marshal-guo-api.vercel.app/api/blogs`, {
                 mode: 'cors', // Set the 'mode' to 'cors' to enable CORS
                 headers: {
                     'Authorization': `Bearer ${user.token}`,    // Show API the user token
-                    'Origin': process.env.REACT_APP_ORIGIN_URL // Set the 'Origin' header to your domain
+                    'Origin': 'https://marshal-guo.vercel.app' // Set the 'Origin' header to your domain
                 }
             });
             const json = await response.json();
