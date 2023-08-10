@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useBlogContext } from "../hooks/useBlogContext";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
+require('dotenv').config();
+
 const CreateBlog = () => {
     const {dispatch} = useBlogContext();
     
@@ -22,11 +24,13 @@ const CreateBlog = () => {
             return;
         }
        
-        const response = await fetch('/api/blogs', {
+        const response = await fetch(`${process.env.API_URL}/api/blogs`, {
             method: 'POST',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${user.token}`
+                'Authorization': `Bearer ${user.token}`,
+                'Origin': process.env.Origin_URL
             },
             body: JSON.stringify({ title, body })
         });

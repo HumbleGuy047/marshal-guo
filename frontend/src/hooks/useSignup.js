@@ -1,6 +1,8 @@
 const { useState } = require('react');
 const { useAuthContext } = require('./useAuthContext');
 
+require('dotenv').config();
+
 export const useSignup = () => {
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(null);
@@ -10,9 +12,13 @@ export const useSignup = () => {
         setIsPending(true);
         setError(null);
 
-        const response = await fetch('/api/users/signup', {
+        const response = await fetch(`${process.env.API_URL}/api/users/signup`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            mode: 'cors',
+            headers: { 
+                'Content-Type': 'application/json', 
+                'Origin': process.env.Origin_URL 
+            },
             body: JSON.stringify({ email, password })
         });
 

@@ -1,6 +1,7 @@
 import { useBlogContext } from "../hooks/useBlogContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useAuthContext } from "../hooks/useAuthContext";
+require('dotenv').config();
 
 const BlogDetails = ({blog}) => {
     const {dispatch} = useBlogContext();
@@ -9,10 +10,12 @@ const BlogDetails = ({blog}) => {
         if (!user) {
             return;
         }
-        const response = await fetch('/api/blogs/'+blog._id, {
+        const response = await fetch(`${process.env.API_URL}/api/blogs/${blog._id}`, {
             method: "DELETE",
+            mode: "cors",
             headers: {
                 'Authorization': `Bearer ${user.token}`,
+                'Origin': process.env.ORIGIN_URL
             }
         });
         const json = await response.json();
