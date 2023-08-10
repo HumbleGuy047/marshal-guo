@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended: true}));
 //============== CORS ==============
 app.use(cors(
     {
-        origin: ["https://marshal-guo.vercel.app"],
+        origin: ["https://marshal-guo.vercel.app", "http://localhost:3000"],
         methods: ["POST", "GET", "DELETE", "PATCH"],
         credentials: true
     }

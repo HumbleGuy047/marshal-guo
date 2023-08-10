@@ -11,6 +11,7 @@ const CreateBlog = () => {
     const [body, setBody] = useState('');
     const [error, setError] = useState(null);
     const [emptyFields, setEmtpyFields] = useState([]);
+    const [isPending, setIsPending] = useState(false);
 
     const navigate = useNavigate();
 
@@ -18,11 +19,7 @@ const CreateBlog = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!user) {
-            setError('You must be logged in to create a blog');
-            return;
-        }
+        setIsPending(true);
        
         const response = await fetch(`https://marshal-guo-api.vercel.app/api/blogs`, {
             method: 'POST',
@@ -38,6 +35,7 @@ const CreateBlog = () => {
         if (!response.ok) {
             setError(json.error);
             setEmtpyFields(json.emptyFields);
+            
         }else{
             setError(null);
             setTitle('');
@@ -47,7 +45,7 @@ const CreateBlog = () => {
             dispatch({type: 'ADD_BLOG', payload: json});
             navigate('/');
         }
-
+        setIsPending(false);
     }
 
     return (
@@ -62,7 +60,7 @@ const CreateBlog = () => {
                     <label htmlFor="body">Body</label>
                     <input className={emptyFields.includes('body') ? 'error': ''} type="text" id="body" value={body} onChange={(e) => setBody(e.target.value)} />
                 </div>
-                <button>Finish</button>
+                <button disabled={isPending} type="submit">Finish</button>
             </form>
         </div>
     );
