@@ -25,12 +25,13 @@ const Navbar = () => {
                     }
                     { !user &&
                         (<div>
+                            Are you the owner of this website? 
                             <Link to="/Login">
                                 Log In
                             </Link>
-                            <Link to="/signup">
+                            {/* <Link to="/signup">
                                 Sign Up
-                            </Link>
+                            </Link> */}
                         </div>)
                     }
                 </nav>

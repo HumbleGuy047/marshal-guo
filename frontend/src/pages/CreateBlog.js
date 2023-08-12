@@ -1,8 +1,8 @@
+import axios from "axios";
 import { useState } from "react";
 import { useBlogContext } from "../hooks/useBlogContext";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
-// require('dotenv').config();
 
 const CreateBlog = () => {
     const {dispatch} = useBlogContext();
@@ -20,31 +20,26 @@ const CreateBlog = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsPending(true);
-       
-        const response = await fetch(`https://marshal-guo-api.vercel.app/api/blogs`, {
-            method: 'POST',
-            mode: 'cors',
+        setError(null);
+        const baseURL = process.env.REACT_APP_DEV === 'true' ? process.env.REACT_APP_API_LOCAL_URL : process.env.REACT_APP_API_URL; 
+        await axios.post(`${baseURL}/api/blogs`, {title, body},{
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}`,
-                'Origin': 'https://marshal-guo.vercel.app'
             },
-            body: JSON.stringify({ title, body })
+        }).then( response => {
+                setTitle('');
+                setBody('');
+                console.log('Blog created successfully' + response.data);
+                setEmtpyFields([]);
+                dispatch({type: 'ADD_BLOG', payload: response.data});
+                navigate('/');
+            }
+        ).catch(err => {
+            console.log(err);
+            setError(err.message);
+            setEmtpyFields(err.response.data.emptyFields);
         });
-        const json = await response.json();
-        if (!response.ok) {
-            setError(json.error);
-            setEmtpyFields(json.emptyFields);
-            
-        }else{
-            setError(null);
-            setTitle('');
-            setBody('');
-            console.log('Blog created successfully' + json);
-            setEmtpyFields([]);
-            dispatch({type: 'ADD_BLOG', payload: json});
-            navigate('/');
-        }
+        
         setIsPending(false);
     }
 
