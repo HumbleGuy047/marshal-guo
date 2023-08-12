@@ -3,7 +3,7 @@ import BlogDetails from '../components/BlogDetails';
 import { useBlogContext } from '../hooks/useBlogContext';
 import { Link } from 'react-router-dom';
 import {useAuthContext} from '../hooks/useAuthContext';
-// require('dotenv').config();
+import axios from 'axios';
 
 const ViewBlogs = () => {
     const {blogs, dispatch} = useBlogContext();
