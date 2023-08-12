@@ -27,7 +27,7 @@ const BlogDetails = ({blog}) => {
     return (
         <div className="blog-details">
             <h2>{blog.title}</h2>
-            <p><strong>Content &nbsp;</strong>{blog.body.substring(0, 50)}...</p>
+            <p><strong>Content &nbsp;</strong>{blog.body}...</p>
             <p>{formatDistanceToNow(new Date(blog.createdAt), { addSuffix: true })}</p>
             <span hidden={!user} onClick={handleDelete}>delete</span>
             <span hidden={!user} onClick={handleUpdate}>edit</span>

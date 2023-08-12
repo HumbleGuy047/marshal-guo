@@ -55,6 +55,11 @@ const CreateBlog = () => {
                     <label htmlFor="body">Body</label>
                     <input className={emptyFields.includes('body') ? 'error': ''} type="text" id="body" value={body} onChange={(e) => setBody(e.target.value)} />
                 </div>
+                <div>
+                    <label htmlFor="media">Media</label>
+                    <File type="" id="tags" />
+                
+                </div>
                 <button disabled={isPending} type="submit">Finish</button>
             </form>
         </div>

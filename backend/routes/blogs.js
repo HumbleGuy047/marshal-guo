@@ -4,10 +4,13 @@ const {createBlog, getBlogs, getBlog, deleteBlog, updateBlog} = require('../cont
 
 const requireAuth = require('../middleware/requireAuth');
 
-router.use(requireAuth);
 
 // different requests
 router.get('/', getBlogs);
+
+// require auth for all of the routes after this
+router.use(requireAuth);    // requireAuth middleware
+
 router.post('/', createBlog);
 router.get('/:id', getBlog);
 router.delete('/:id', deleteBlog);
