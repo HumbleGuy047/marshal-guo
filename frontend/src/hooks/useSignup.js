@@ -1,7 +1,6 @@
+import axios from 'axios';
 const { useState } = require('react');
 const { useAuthContext } = require('./useAuthContext');
-
-// require('dotenv').config();
 
 export const useSignup = () => {
     const [error, setError] = useState(null);
@@ -11,31 +10,24 @@ export const useSignup = () => {
     const signup = async (email, password) => {
         setIsPending(true);
         setError(null);
-
-        const response = await fetch(`https://marshal-guo-api.vercel.app/api/users/signup`, {
-            method: 'POST',
-            mode: 'cors',
+        const baseURL = process.env.REACT_APP_DEV === 'true' ? process.env.REACT_APP_API_LOCAL_URL : process.env.REACT_APP_API_URL; 
+        await axios.post(`${baseURL}/api/users/signup`, {email, password}, {
             headers: { 
                 'Content-Type': 'application/json', 
-                'Origin': 'https://marshal-guo.vercel.app'
             },
-            body: JSON.stringify({ email, password })
+        })
+        .then( response => {
+            // save to local storage
+            localStorage.setItem('user', JSON.stringify(response.data));
+            // update auth context
+            dispatch({ type: 'LOGIN', payload: response.data });
+        })
+        .catch(err => {
+            console.log(err);
+            setError(err.message);
         });
 
-        const json = await response.json();
-
-        if (!response.ok) {
-            setIsPending(false);
-            setError(json.error);
-        }
-
-        if (response.ok) {
-            // save to local storage
-            localStorage.setItem('user', JSON.stringify(json));
-            // update auth context
-            dispatch({ type: 'LOGIN', payload: json });
-            setIsPending(false);
-        }
+        setIsPending(false);
     }
     return {signup, isPending, error};    
 }

@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
 import { useBlogContext } from "../hooks/useBlogContext";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
+// require('dotenv').config();
 
 const CreateBlog = () => {
     const {dispatch} = useBlogContext();
@@ -20,26 +20,31 @@ const CreateBlog = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsPending(true);
-        setError(null);
-        const baseURL = process.env.REACT_APP_DEV === 'true' ? process.env.REACT_APP_API_LOCAL_URL : process.env.REACT_APP_API_URL; 
-        await axios.post(`${baseURL}/api/blogs`, {title, body},{
+       
+        const response = await fetch(`https://marshal-guo-api.vercel.app/api/blogs/${user._id}`, {
+            method: 'POST',
+            mode: 'cors',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}`,
+                'Origin': 'https://marshal-guo.vercel.app'
             },
-        }).then( response => {
-                setTitle('');
-                setBody('');
-                console.log('Blog created successfully' + response.data);
-                setEmtpyFields([]);
-                dispatch({type: 'ADD_BLOG', payload: response.data});
-                navigate('/');
-            }
-        ).catch(err => {
-            console.log(err);
-            setError(err.message);
-            setEmtpyFields(err.response.data.emptyFields);
+            body: JSON.stringify({ title, body })
         });
-        
+        const json = await response.json();
+        if (!response.ok) {
+            setError(json.error);
+            setEmtpyFields(json.emptyFields);
+            
+        }else{
+            setError(null);
+            setTitle('');
+            setBody('');
+            console.log('Blog created successfully' + json);
+            setEmtpyFields([]);
+            dispatch({type: 'ADD_BLOG', payload: json});
+            navigate('/');
+        }
         setIsPending(false);
     }
 
@@ -54,9 +59,6 @@ const CreateBlog = () => {
                 <div>
                     <label htmlFor="body">Body</label>
                     <input className={emptyFields.includes('body') ? 'error': ''} type="text" id="body" value={body} onChange={(e) => setBody(e.target.value)} />
-                </div>
-                <div>
-                    <label htmlFor="media">Media</label>                
                 </div>
                 <button disabled={isPending} type="submit">Finish</button>
             </form>
