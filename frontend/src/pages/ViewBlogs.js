@@ -22,6 +22,7 @@ const ViewBlogs = () => {
                 <BlogDetails key={blog._id} blog={blog}/>
             ))}
         </div>
+
     );
 }
 
