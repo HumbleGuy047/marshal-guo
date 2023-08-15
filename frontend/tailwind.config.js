@@ -9,9 +9,9 @@ module.exports = {
         xs: "425px",
       },
       colors: {
-        bkg: "#171819",
+        bkg: "#1d46db",
         muted: "#C9CBCF",
-        accent: "#66CCC1",
+        accent: "#5f6aba",
       },
       dropShadow: {
         "text-sm": "1px 1px 0px rgba(0, 0, 0, 0.90)",

@@ -24,7 +24,11 @@ export const useLogin = () => {
         }
         ).catch(err => {
             console.log(err);
-            setError(err.message);
+            if (err.response && err.response.data && err.response.data.error) {
+                setError(err.response.data.error); // Set the error message from the API response
+            } else {
+                setError('An error occurred during login.');
+            }
         });
 
 

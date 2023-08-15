@@ -1,4 +1,4 @@
-import './style.css';
+import '../style.css';
 
 // IMAGE SLIDER //
 const slideBtns = document.querySelectorAll('[data-slideBtn]');
